@@ -1,0 +1,104 @@
+﻿@model MOM.Models.StaffModel
+
+@{
+    ViewData["Title"] = "Add New Staff Member";
+}
+
+<div class="pagetitle mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1>Add New Staff Member</h1>
+            <nav>
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Master Data</li>
+                    <li class="breadcrumb-item"><a asp-action="Index">Staff Members</a></li>
+                    <li class="breadcrumb-item active">Add New</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0">
+             <div class="card-header text-white py-3" style="background: linear-gradient(to right, #6366f1, #818cf8);">
+                <h5 class="mb-0"><i class="bi bi-person-plus me-2"></i> Add New Staff Member</h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row g-4">
+                         <!-- Staff Name -->
+                        <div class="col-md-6">
+                            <label asp-for="StaffName" class="form-label fw-semibold">Staff Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-person text-muted"></i></span>
+                                 <input asp-for="StaffName" class="form-control" placeholder="Enter staff name" />
+                            </div>
+                            <span asp-validation-for="StaffName" class="text-danger small"></span>
+                        </div>
+
+                         <!-- Department -->
+                        <div class="col-md-6">
+                            <label asp-for="DepartmentID" class="form-label fw-semibold">Department</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-building text-muted"></i></span>
+                                <select asp-for="DepartmentID" class="form-select" asp-items="@(new SelectList(ViewBag.DepartmentList, "DepartmentID", "DepartmentName"))">
+                                    <option value="">-- Select Department --</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="DepartmentID" class="text-danger small"></span>
+                        </div>
+
+                         <!-- Email Address -->
+                        <div class="col-md-6">
+                            <label asp-for="EmailAddress" class="form-label fw-semibold">Email Address</label>
+                             <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-envelope text-muted"></i></span>
+                                <input asp-for="EmailAddress" class="form-control" type="email" placeholder="Enter email address" />
+                            </div>
+                            <span asp-validation-for="EmailAddress" class="text-danger small"></span>
+                        </div>
+
+                         <!-- Mobile Number -->
+                        <div class="col-md-6">
+                            <label asp-for="MobileNo" class="form-label fw-semibold">Mobile Number</label>
+                             <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-telephone text-muted"></i></span>
+                                <input asp-for="MobileNo" class="form-control" placeholder="Enter mobile number" />
+                            </div>
+                            <div class="form-text small text-muted">Example: +91 98765 43210</div>
+                            <span asp-validation-for="MobileNo" class="text-danger small"></span>
+                        </div>
+
+                         <!-- Remarks -->
+                        <div class="col-12">
+                            <label asp-for="Remarks" class="form-label fw-semibold">Remarks</label>
+                             <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-chat-text text-muted"></i></span>
+                                <textarea asp-for="Remarks" class="form-control" rows="3" placeholder="Enter any additional remarks (optional)"></textarea>
+                            </div>
+                            <span asp-validation-for="Remarks" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end align-items-center mt-4 pt-2 border-top">
+                        <a asp-action="Index" class="text-decoration-none text-muted me-3">
+                            <i class="bi bi-arrow-left me-1"></i> Back to List
+                        </a>
+                        <button type="submit" class="btn btn-primary px-4" style="background-color: #4f46e5;">
+                            <i class="bi bi-check-circle me-1"></i> Create Staff Member
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

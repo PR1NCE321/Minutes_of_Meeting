@@ -1,0 +1,114 @@
+﻿@model IEnumerable<MOM.Models.DepartmentModel>
+
+@{
+    ViewData["Title"] = "Departments";
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+
+<div class="pagetitle mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1>Departments</h1>
+            <nav>
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Master Data</li>
+                    <li class="breadcrumb-item active">Departments</li>
+                </ol>
+            </nav>
+        </div>
+        <div>
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i> Add Department
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Search & Filters -->
+<div class="card mb-4 shadow-sm border-0">
+    <div class="card-header text-white" style="background-color: #6366f1;">
+        <i class="bi bi-funnel me-2"></i> Search
+    </div>
+    <div class="card-body py-4">
+        <form class="row g-3">
+             <div class="col-md-10">
+                <label class="form-label small text-muted fw-bold">Search Department</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by name...">
+                    <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+                </div>
+            </div>
+             <div class="col-md-2 d-flex align-items-end">
+                <button type="button" class="btn btn-primary w-100" style="background-color: #4f46e5;">
+                    <i class="bi bi-search me-1"></i> Search
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-header text-white" style="background-color: #6366f1;">
+        <i class="bi bi-building me-2"></i> Departments List
+    </div>
+    <div class="card-body p-0">
+         <div class="table-responsive">
+            <table class="table table-hover table-large-font align-middle mb-0">
+                <thead class="bg-light text-secondary small text-uppercase">
+                    <tr>
+                         <th class="ps-4">#</th>
+                        <th class="text-nowrap">Department Name</th>
+                        <th class="text-end pe-4 text-nowrap">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="border-top-0">
+                    @if (Model.Any())
+                    {
+                        int i = 1;
+                        foreach (var d in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 text-muted">@i</td>
+                                <td class="fw-bold text-dark text-nowrap">@d.DepartmentName</td>
+                                <td class="text-end pe-4 text-nowrap">
+                                    <a asp-action="Edit" asp-route-id="@d.DepartmentID" class="btn btn-light btn-sm text-success" title="Edit">
+                                        <i class="bi bi-pencil-square fs-5"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@d.DepartmentID" class="btn btn-light btn-sm text-danger ms-1" title="Delete" onclick="return confirm('Delete this department?');">
+                                        <i class="bi bi-trash fs-5"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center text-muted py-4">No Departments Found</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

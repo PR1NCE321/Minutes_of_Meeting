@@ -1,0 +1,156 @@
+﻿@model IEnumerable<MOM.Models.AttendanceVM>
+
+@{
+    ViewData["Title"] = "Attendance Report";
+
+    var total = Model.Count();
+    var present = Model.Count(x => x.IsPresent);
+    var attendanceRate = total == 0 ? 0 : (present * 100 / total);
+}
+
+<div class="container-fluid">
+
+    <!-- ================= HEADER ================= -->
+    <div class="mb-4">
+        <h4 class="fw-bold">Attendance Report</h4>
+        <p class="text-muted mb-0">Generate and view meeting attendance</p>
+    </div>
+
+    <!-- ================= FILTER CARD ================= -->
+    <div class="card shadow-sm mb-4 border-0">
+        <div class="card-header bg-primary text-white d-flex align-items-center">
+            <i class="bi bi-funnel me-2"></i>
+            <strong>Report Filters</strong>
+        </div>
+
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label">Start Date</label>
+                    <input type="date" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">End Date</label>
+                    <input type="date" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary w-100">
+                        <i class="bi bi-search me-1"></i> Generate Report
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-success w-100">
+                        <i class="bi bi-download me-1"></i> Export
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= STATS ================= -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <small class="text-muted">TOTAL RECORDS</small>
+                    <h4 class="fw-bold mt-1">@total</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <small class="text-muted">PRESENT</small>
+                    <h4 class="fw-bold text-success mt-1">@present</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <small class="text-muted">ATTENDANCE RATE</small>
+                    <h4 class="fw-bold text-warning mt-1">@attendanceRate%</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center">
+                <div class="card-body">
+                    <small class="text-muted">UNIQUE MEETINGS</small>
+                    <h4 class="fw-bold text-primary mt-1">
+                        @Model.Select(x => x.MeetingDate).Distinct().Count()
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= TABLE ================= -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between">
+            <span>
+                <i class="bi bi-table me-2"></i>
+                Attendance Data
+            </span>
+            <span class="badge bg-light text-dark">
+                @total records
+            </span>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Meeting Date</th>
+                            <th>Meeting Type</th>
+                            <th>Venue</th>
+                            <th>Department</th>
+                            <th>Staff Name</th>
+                            <th>Email</th>
+                            <th>Attendance</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var m in Model)
+                        {
+                            <tr>
+                                <td>@m.MeetingDate.ToString("yyyy-MM-dd HH:mm")</td>
+
+                                <td>
+                                    <span class=" text-dark">
+                                        @m.MeetingTypeName
+                                    </span>
+                                </td>
+
+                                <td>@m.MeetingVenueName</td>
+                                <td>@m.DepartmentName</td>
+                                <td>@m.StaffName</td>
+                                <td class="text-muted">@m.EmailAddress</td>
+
+                                <td>
+                                    @if (m.IsPresent)
+                                    {
+                                        <span class="badge bg-success">Present</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Absent</span>
+                                    }
+                                </td>
+
+                                <td>@(string.IsNullOrEmpty(m.Remarks) ? "-" : m.Remarks)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

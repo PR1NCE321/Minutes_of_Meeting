@@ -1,0 +1,111 @@
+﻿@model MOM.Models.MeetingsModel
+
+@{
+    ViewData["Title"] = "Schedule Meeting";
+}
+
+<div class="pagetitle mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1>Schedule Meeting</h1>
+             <p class="text-muted small">Schedule a new meeting and notify participants</p>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header text-white py-3" style="background: linear-gradient(to right, #6366f1, #818cf8);">
+                <h5 class="mb-0"><i class="bi bi-calendar-plus me-2"></i> Schedule New Meeting</h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row g-4">
+                        <!-- Date -->
+                        <div class="col-md-6">
+                            <label asp-for="MeetingDate" class="form-label fw-semibold">Meeting Date & Time</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-calendar-event text-muted"></i></span>
+                                <input asp-for="MeetingDate" class="form-control" type="datetime-local" />
+                            </div>
+                            <span asp-validation-for="MeetingDate" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Department -->
+                        <div class="col-md-6">
+                            <label asp-for="DepartmentID" class="form-label fw-semibold">Department</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-building text-muted"></i></span>
+                                <select asp-for="DepartmentID" class="form-select" asp-items="@(new SelectList(ViewBag.DepartmentList, "DepartmentID", "DepartmentName"))">
+                                    <option value="">-- Select Department --</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="DepartmentID" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Meeting Type -->
+                        <div class="col-md-6">
+                            <label asp-for="MeetingTypeID" class="form-label fw-semibold">Meeting Type</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-tags text-muted"></i></span>
+                                <select asp-for="MeetingTypeID" class="form-select" asp-items="@(new SelectList(ViewBag.MeetingTypeList, "MeetingTypeID", "MeetingTypeName"))">
+                                    <option value="">-- Select Meeting Type --</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="MeetingTypeID" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Venue -->
+                        <div class="col-md-6">
+                            <label asp-for="MeetingVenueID" class="form-label fw-semibold">Meeting Venue</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-geo-alt text-muted"></i></span>
+                                <select asp-for="MeetingVenueID" class="form-select" asp-items="@(new SelectList(ViewBag.MeetingVenueList, "MeetingVenueID", "MeetingVenueName"))">
+                                    <option value="">-- Select Venue --</option>
+                                </select>
+                            </div>
+                             <span asp-validation-for="MeetingVenueID" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="col-12">
+                            <label asp-for="MeetingDescription" class="form-label fw-semibold">Description</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-card-text text-muted"></i></span>
+                                <textarea asp-for="MeetingDescription" class="form-control" style="height: 100px" placeholder="Enter meeting description and agenda..."></textarea>
+                            </div>
+                            <span asp-validation-for="MeetingDescription" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Document Path -->
+                        <div class="col-12">
+                             <label asp-for="DocumentPath" class="form-label fw-semibold">Document Link (Optional)</label>
+                             <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-link-45deg text-muted"></i></span>
+                                <input asp-for="DocumentPath" class="form-control" placeholder="https://..." />
+                            </div>
+                             <div class="form-text small text-muted">Paste a link to relevant documents (e.g. SharePoint, Drive)</div>
+                             <span asp-validation-for="DocumentPath" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end align-items-center mt-4 pt-2 border-top">
+                        <a asp-action="Index" class="text-decoration-none text-muted me-3">
+                            <i class="bi bi-arrow-left me-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary px-4" style="background-color: #4f46e5;">
+                            <i class="bi bi-check-circle me-1"></i> Schedule Meeting
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

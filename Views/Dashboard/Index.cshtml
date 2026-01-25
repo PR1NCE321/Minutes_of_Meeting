@@ -1,0 +1,294 @@
+﻿@model MOM.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<style>
+    :root {
+        --saas-primary: #0f172a;
+        --saas-secondary: #64748b;
+        --saas-bg: #f8fafc;
+        --saas-card-bg: #ffffff;
+    }
+
+    .saas-card {
+        background: var(--saas-card-bg);
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .saas-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        border-color: #cbd5e1;
+    }
+
+    .icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .icon-box-primary { background-color: #eff6ff; color: #3b82f6; } /* Blue */
+    .icon-box-success { background-color: #f0fdf4; color: #22c55e; } /* Green */
+    .icon-box-warning { background-color: #fefce8; color: #eab308; } /* Yellow */
+    .icon-box-danger  { background-color: #fef2f2; color: #ef4444; } /* Red */
+
+    .metric-label {
+        color: #64748b;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.25rem;
+    }
+
+    .metric-value {
+        color: #0f172a;
+        font-size: 2.25rem;
+        font-weight: 700;
+        line-height: 1.1;
+    }
+
+    .metric-sub {
+        font-size: 0.8rem;
+        color: #94a3b8;
+        margin-top: 0.5rem;
+        display: block;
+    }
+
+    .action-btn-modern {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border-radius: 8px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        color: #334155;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .action-btn-modern:hover {
+        background: #ffffff;
+        border-color: #cbd5e1;
+        color: #0f172a;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+</style>
+
+<div class="container-fluid py-4">
+
+    <!-- Header Section -->
+    <div class="row align-items-center mb-5">
+        <div class="col-md-8">
+            <h1 class="fw-bold text-dark mb-1">Overview</h1>
+            <p class="text-secondary mb-0">Track your organization's meeting metrics and performance.</p>
+        </div>
+    </div>
+
+    <!-- Metrics Grid -->
+    <div class="row g-4 mb-5">
+        
+        <!-- Metric 1 -->
+        <div class="col-xl-3 col-sm-6">
+            <div class="saas-card h-100 p-4">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="icon-box icon-box-primary">
+                        <i class="bi bi-calendar4-event"></i>
+                    </div>
+                     <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-2">Live</span>
+                </div>
+                <div class="metric-value">@Model.TotalMeetings</div>
+                <div class="metric-label">Total Meetings</div>
+                <span class="metric-sub">Scheduled across all depts</span>
+            </div>
+        </div>
+
+        <!-- Metric 2 -->
+        <div class="col-xl-3 col-sm-6">
+            <div class="saas-card h-100 p-4">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="icon-box icon-box-success">
+                        <i class="bi bi-layers"></i>
+                    </div>
+                </div>
+                <div class="metric-value">@Model.TotalMeetingTypes</div>
+                <div class="metric-label">Meeting Types</div>
+                <span class="metric-sub">Active categories defined</span>
+            </div>
+        </div>
+
+        <!-- Metric 3 -->
+        <div class="col-xl-3 col-sm-6">
+            <div class="saas-card h-100 p-4">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="icon-box icon-box-warning">
+                        <i class="bi bi-person-video2"></i>
+                    </div>
+                </div>
+                <div class="metric-value">@Model.TotalDepartments</div>
+                <div class="metric-label">Departments</div>
+                <span class="metric-sub">Participating units</span>
+            </div>
+        </div>
+
+        <!-- Metric 4 -->
+        <div class="col-xl-3 col-sm-6">
+            <div class="saas-card h-100 p-4">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="icon-box icon-box-danger">
+                        <i class="bi bi-slash-circle"></i>
+                    </div>
+                     @if(Model.CancelledMeetings > 0) {
+                        <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2">High Attention</span>
+                     }
+                </div>
+                <div class="metric-value">@Model.CancelledMeetings</div>
+                <div class="metric-label">Cancelled</div>
+                <span class="metric-sub">Meetings stopped or voided</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Charts & Actions Split -->
+    <div class="row g-4">
+        
+        <!-- Main Chart Area -->
+        <div class="col-lg-8">
+            <div class="saas-card p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h5 class="fw-bold mb-0">Meeting Analytics</h5>
+                        <p class="text-secondary small mb-0">Growth and frequency over time</p>
+                    </div>
+                    <button class="btn btn-light btn-sm rounded-circle"><i class="bi bi-three-dots"></i></button>
+                </div>
+                <div style="position: relative; height: 320px; width: 100%;">
+                    <canvas id="mainChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions Panel -->
+        <div class="col-lg-4">
+            <div class="saas-card p-4 h-100">
+                <h5 class="fw-bold mb-3">Quick Actions</h5>
+                
+                <div class="d-flex flex-column gap-3">
+                    <a asp-controller="Meetings" asp-action="Create" class="action-btn-modern">
+                        <i class="bi bi-plus-lg me-3 text-primary fs-5"></i>
+                        <div>
+                            <div class="fw-bold">New Meeting</div>
+                            <small class="text-secondary">Schedule and notify team</small>
+                        </div>
+                        <i class="bi bi-chevron-right ms-auto text-muted"></i>
+                    </a>
+
+                    <a asp-controller="Staff" asp-action="Create" class="action-btn-modern">
+                        <i class="bi bi-person-plus me-3 text-success fs-5"></i>
+                        <div>
+                            <div class="fw-bold">Add Staff</div>
+                            <small class="text-secondary">Onboard new member</small>
+                        </div>
+                        <i class="bi bi-chevron-right ms-auto text-muted"></i>
+                    </a>
+
+                    <a asp-controller="Department" asp-action="Create" class="action-btn-modern">
+                        <i class="bi bi-building-add me-3 text-warning fs-5"></i>
+                        <div>
+                            <div class="fw-bold">Add Department</div>
+                            <small class="text-secondary">Create new unit</small>
+                        </div>
+                        <i class="bi bi-chevron-right ms-auto text-muted"></i>
+                    </a>
+
+                     <a asp-controller="MeetingVenue" asp-action="Create" class="action-btn-modern">
+                        <i class="bi bi-geo me-3 text-info fs-5"></i>
+                        <div>
+                            <div class="fw-bold">Add Venue</div>
+                            <small class="text-secondary">Manage locations</small>
+                        </div>
+                        <i class="bi bi-chevron-right ms-auto text-muted"></i>
+                    </a>
+                </div>
+
+                <div class="mt-4 pt-3 border-top">
+                    <div class="d-flex justify-content-between text-secondary small">
+                        <span>Total Venues Available</span>
+                        <span class="fw-bold text-dark">@Model.TotalVenues</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const ctx = document.getElementById('mainChart').getContext('2d');
+        
+        // Use real data from model essentially
+        const total = @Model.TotalMeetings;
+        const cancelled = @Model.CancelledMeetings;
+        const active = total - cancelled;
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], // Static for now as we don't have historical data model
+                datasets: [{
+                    label: 'Total Meetings',
+                    data: [5, 10, 8, 15, 12, total],
+                    borderColor: '#4f46e5',
+                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'Cancelled',
+                    data: [0, 1, 0, 2, 1, cancelled],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                 plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: true,
+                            borderDash: [2, 2]
+                        }
+                    },
+                     x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
