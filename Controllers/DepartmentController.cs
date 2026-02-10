@@ -15,13 +15,28 @@ namespace MOM.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchText = null, int? page = null)
         {
+            var searchTextParam = new SqlParameter("@SearchText", (object?)SearchText ?? DBNull.Value);
+
             var departments = await _context.Departments
-                .FromSqlRaw("EXEC PR_MOM_Department_SelectAll")
+                .FromSqlRaw("EXEC PR_MOM_Department_Search @SearchText", searchTextParam)
                 .ToListAsync();
 
-            return View(departments);
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            int totalRecords = departments.Count;
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            var pagedList = departments.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.TotalRecords = totalRecords;
+            ViewBag.PageSize = pageSize;
+            ViewBag.CurrentSearchText = SearchText;
+
+            return View(pagedList);
         }
 
         public IActionResult Create() => View();
@@ -40,8 +55,18 @@ namespace MOM.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Update(int id)
+        {
+            var department = await _context.Departments.FindAsync(id);
+            if (department == null)
+            {
+                return NotFound();
+            }
+            return View(department);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Edit(DepartmentModel model)
+        public async Task<IActionResult> Update(DepartmentModel model)
         {
             if (ModelState.IsValid)
             {
@@ -53,6 +78,19 @@ namespace MOM.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(model);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var department = await _context.Departments
+                .FirstOrDefaultAsync(m => m.DepartmentID == id);
+
+            if (department == null)
+            {
+                return NotFound();
+            }
+
+            return View(department);
         }
 
         public async Task<IActionResult> Delete(int id)

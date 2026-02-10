@@ -1,0 +1,139 @@
+@model MOM.Models.MeetingsModel
+
+@{
+    ViewData["Title"] = "Update Meeting";
+}
+
+<div class="pagetitle mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1>Update Meeting</h1>
+             <p class="text-muted small">Update meeting details</p>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header text-white py-3" style="background: #4DA8DA;">
+                <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i> Update Meeting</h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Update">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="MeetingID" />
+                    <input type="hidden" asp-for="Created" />
+
+                    <div class="row g-4">
+                        
+                        <div class="col-md-6">
+                            <label asp-for="MeetingDate" class="form-label fw-semibold">Meeting Date & Time</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-calendar-event text-muted"></i></span>
+                                <input asp-for="MeetingDate" class="form-control" type="datetime-local" />
+                            </div>
+                            <span asp-validation-for="MeetingDate" class="text-danger small"></span>
+                        </div>
+
+                        
+                        <div class="col-md-6">
+                            <label asp-for="DepartmentID" class="form-label fw-semibold">Department</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-building text-muted"></i></span>
+                                <select asp-for="DepartmentID" class="form-select" asp-items="@(new SelectList(ViewBag.DepartmentList, "DepartmentID", "DepartmentName"))">
+                                    <option value="">-- Select Department --</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="DepartmentID" class="text-danger small"></span>
+                        </div>
+
+                        
+                        <div class="col-md-6">
+                            <label asp-for="MeetingTypeID" class="form-label fw-semibold">Meeting Type</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-tags text-muted"></i></span>
+                                <select asp-for="MeetingTypeID" class="form-select" asp-items="@(new SelectList(ViewBag.MeetingTypeList, "MeetingTypeID", "MeetingTypeName"))">
+                                    <option value="">-- Select Meeting Type --</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="MeetingTypeID" class="text-danger small"></span>
+                        </div>
+
+                        
+                        <div class="col-md-6">
+                            <label asp-for="MeetingVenueID" class="form-label fw-semibold">Meeting Venue</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-geo-alt text-muted"></i></span>
+                                <select asp-for="MeetingVenueID" class="form-select" asp-items="@(new SelectList(ViewBag.MeetingVenueList, "MeetingVenueID", "MeetingVenueName"))">
+                                    <option value="">-- Select Venue --</option>
+                                </select>
+                            </div>
+                             <span asp-validation-for="MeetingVenueID" class="text-danger small"></span>
+                        </div>
+
+                        
+                        <div class="col-12">
+                            <label asp-for="MeetingDescription" class="form-label fw-semibold">Description</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-card-text text-muted"></i></span>
+                                <textarea asp-for="MeetingDescription" class="form-control" style="height: 100px" placeholder="Enter meeting description and agenda..."></textarea>
+                            </div>
+                            <span asp-validation-for="MeetingDescription" class="text-danger small"></span>
+                        </div>
+
+                        
+                        <div class="col-12">
+                             <label asp-for="DocumentPath" class="form-label fw-semibold">Document Link (Optional)</label>
+                             <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-link-45deg text-muted"></i></span>
+                                <input asp-for="DocumentPath" class="form-control" placeholder="https://..." />
+                            </div>
+                             <div class="form-text small text-muted">Paste a link to relevant documents (e.g. SharePoint, Drive)</div>
+                             <span asp-validation-for="DocumentPath" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="cancelSwitch" name="IsCancelled" value="true" @(Model.IsCancelled.GetValueOrDefault() ? "checked" : "")>
+                                <input type="hidden" name="IsCancelled" value="false" />
+                                <label class="form-check-label fw-bold" for="cancelSwitch">Cancel Meeting?</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12 collapse @(Model.IsCancelled == true ? "show" : "")" id="cancelReasonBox">
+                             <label asp-for="CancellationReason" class="form-label fw-semibold text-danger">Cancellation Reason</label>
+                             <textarea asp-for="CancellationReason" class="form-control border-danger" placeholder="Why is this meeting cancelled?"></textarea>
+                             <span asp-validation-for="CancellationReason" class="text-danger small"></span>
+                             <input type="hidden" asp-for="CancellationDateTime" value="@(Model.CancellationDateTime ?? DateTime.Now)" />
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex justify-content-end align-items-center mt-4 pt-2 border-top">
+                        <a asp-action="Index" class="text-decoration-none text-muted me-3">
+                            <i class="bi bi-arrow-left me-1"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary px-4" style="background-color: #4DA8DA;">
+                            <i class="bi bi-save me-1"></i> Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById('cancelSwitch').addEventListener('change', function() {
+            var box = document.getElementById('cancelReasonBox');
+            if(this.checked) {
+                new bootstrap.Collapse(box, { show: true });
+            } else {
+                new bootstrap.Collapse(box, { hide: true });
+            }
+        });
+    </script>
+}

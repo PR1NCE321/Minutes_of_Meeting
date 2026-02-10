@@ -1,49 +1,44 @@
-﻿@model MOM.Models.DepartmentModel
+@model MOM.Models.DepartmentModel
 
 @{
     ViewData["Title"] = "Add New Department";
 }
 
-<div class="pagetitle mb-4">
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <h1>Add New Department</h1>
-             <p class="text-muted small">Create a new department for the organization</p>
-        </div>
-    </div>
-</div>
-
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-        <div class="card shadow-sm border-0">
-             <div class="card-header text-white py-3" style="background: linear-gradient(to right, #6366f1, #818cf8);">
-                <h5 class="mb-0"><i class="bi bi-building me-2"></i> Add New Department</h5>
-            </div>
-            <div class="card-body p-4">
-                <form asp-action="Create" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-
-                    <div class="col-12">
-                        <label asp-for="DepartmentName" class="form-label fw-semibold">Department Name</label>
-                            <div class="input-group">
-                            <span class="input-group-text bg-light"><i class="bi bi-building text-muted"></i></span>
-                                <input asp-for="DepartmentName" class="form-control" placeholder="Enter department name" />
-                                <span class="input-group-text text-success bg-white"><i class="bi bi-check-lg"></i></span>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-body p-0">
+                    <div class="px-5 py-5 bg-white">
+                        <div class="mb-4">
+                            <h2 class="fw-bold mb-1 text-dark">New Department</h2>
+                            <p class="text-muted small">Create a space for a new team.</p>
                         </div>
-                        <div class="form-text small text-muted">e.g. IT, Human Resources, Finance, Marketing</div>
-                        <span asp-validation-for="DepartmentName" class="text-danger small"></span>
-                    </div>
 
-                    <div class="d-flex justify-content-end align-items-center mt-4 pt-2 border-top">
-                         <a asp-action="Index" class="text-decoration-none text-muted me-3">
-                            <i class="bi bi-arrow-left me-1"></i> Back to List
-                        </a>
-                        <button type="submit" class="btn btn-primary px-4" style="background-color: #4f46e5;">
-                            <i class="bi bi-check-circle me-1"></i> Create Department
-                        </button>
+                        <form asp-action="Create" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3 small"></div>
+
+                            <div class="mb-4">
+                                <label class="form-label small fw-bold text-uppercase text-muted">Department Name</label>
+                                <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
+                                    <span class="input-group-text border-0 bg-light pe-0"><i class="bi bi-building text-secondary"></i></span>
+                                    <input asp-for="DepartmentName" class="form-control border-0 bg-light fs-6 fw-bold text-dark ps-3" placeholder="e.g. Marketing" />
+                                </div>
+                                <span asp-validation-for="DepartmentName" class="text-danger small mt-1 d-block"></span>
+                            </div>
+
+                            <div class="d-grid mt-5">
+                                <button type="submit" class="btn btn-primary btn-lg rounded-3 fw-bold border-0 shadow-sm" style="background-color: #4DA8DA;">
+                                    Create Department
+                                </button>
+                                <a asp-action="Index" class="btn btn-link text-muted btn-sm mt-3 text-decoration-none">Cancel</a>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
+
         </div>
     </div>
 </div>

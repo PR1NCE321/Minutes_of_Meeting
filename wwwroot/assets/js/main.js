@@ -1,17 +1,9 @@
-/**
-* Template Name: NiceAdmin
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Updated: Apr 20 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 
-(function() {
+
+(function () {
   "use strict";
 
-  /**
-   * Easy selector helper function
-   */
+
   const select = (el, all = false) => {
     el = el.trim()
     if (all) {
@@ -21,9 +13,7 @@
     }
   }
 
-  /**
-   * Easy event listener function
-   */
+
   const on = (type, el, listener, all = false) => {
     if (all) {
       select(el, all).forEach(e => e.addEventListener(type, listener))
@@ -32,34 +22,26 @@
     }
   }
 
-  /**
-   * Easy on scroll event listener 
-   */
+
   const onscroll = (el, listener) => {
     el.addEventListener('scroll', listener)
   }
 
-  /**
-   * Sidebar toggle
-   */
+
   if (select('.toggle-sidebar-btn')) {
-    on('click', '.toggle-sidebar-btn', function(e) {
+    on('click', '.toggle-sidebar-btn', function (e) {
       select('body').classList.toggle('toggle-sidebar')
     })
   }
 
-  /**
-   * Search bar toggle
-   */
+
   if (select('.search-bar-toggle')) {
-    on('click', '.search-bar-toggle', function(e) {
+    on('click', '.search-bar-toggle', function (e) {
       select('.search-bar').classList.toggle('search-bar-show')
     })
   }
 
-  /**
-   * Navbar links active state on scroll
-   */
+
   let navbarlinks = select('#navbar .scrollto', true)
   const navbarlinksActive = () => {
     let position = window.scrollY + 200
@@ -77,25 +59,32 @@
   window.addEventListener('load', navbarlinksActive)
   onscroll(document, navbarlinksActive)
 
-  /**
-   * Toggle .header-scrolled class to #header when page is scrolled
-   */
+
   let selectHeader = select('#header')
   if (selectHeader) {
+    let lastScrollTop = 0;
     const headerScrolled = () => {
-      if (window.scrollY > 100) {
+      const currentScroll = window.scrollY;
+      if (currentScroll > 100) {
         selectHeader.classList.add('header-scrolled')
       } else {
         selectHeader.classList.remove('header-scrolled')
       }
+
+      if (currentScroll > lastScrollTop && currentScroll > 100) {
+        selectHeader.classList.add('header-hidden');
+        document.body.classList.add('nav-hidden');
+      } else {
+        selectHeader.classList.remove('header-hidden');
+        document.body.classList.remove('nav-hidden');
+      }
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
     }
     window.addEventListener('load', headerScrolled)
     onscroll(document, headerScrolled)
   }
 
-  /**
-   * Back to top button
-   */
+
   let backtotop = select('.back-to-top')
   if (backtotop) {
     const toggleBacktotop = () => {
@@ -109,17 +98,13 @@
     onscroll(document, toggleBacktotop)
   }
 
-  /**
-   * Initiate tooltips
-   */
+
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
   })
 
-  /**
-   * Initiate quill editors
-   */
+
   if (select('.quill-editor-default')) {
     new Quill('.quill-editor-default', {
       theme: 'snow'
@@ -143,31 +128,31 @@
           }],
           ["bold", "italic", "underline", "strike"],
           [{
-              color: []
-            },
-            {
-              background: []
-            }
+            color: []
+          },
+          {
+            background: []
+          }
           ],
           [{
-              script: "super"
-            },
-            {
-              script: "sub"
-            }
+            script: "super"
+          },
+          {
+            script: "sub"
+          }
           ],
           [{
-              list: "ordered"
-            },
-            {
-              list: "bullet"
-            },
-            {
-              indent: "-1"
-            },
-            {
-              indent: "+1"
-            }
+            list: "ordered"
+          },
+          {
+            list: "bullet"
+          },
+          {
+            indent: "-1"
+          },
+          {
+            indent: "+1"
+          }
           ],
           ["direction", {
             align: []
@@ -180,9 +165,7 @@
     });
   }
 
-  /**
-   * Initiate TinyMCE Editor
-   */
+
 
   const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const isSmallScreen = window.matchMedia('(max-width: 1023.5px)').matches;
@@ -200,49 +183,49 @@
     autosave_retention: '2m',
     image_advtab: true,
     link_list: [{
-        title: 'My page 1',
-        value: 'https://www.tiny.cloud'
-      },
-      {
-        title: 'My page 2',
-        value: 'http://www.moxiecode.com'
-      }
+      title: 'My page 1',
+      value: 'https://www.tiny.cloud'
+    },
+    {
+      title: 'My page 2',
+      value: 'http://www.moxiecode.com'
+    }
     ],
     image_list: [{
-        title: 'My page 1',
-        value: 'https://www.tiny.cloud'
-      },
-      {
-        title: 'My page 2',
-        value: 'http://www.moxiecode.com'
-      }
+      title: 'My page 1',
+      value: 'https://www.tiny.cloud'
+    },
+    {
+      title: 'My page 2',
+      value: 'http://www.moxiecode.com'
+    }
     ],
     image_class_list: [{
-        title: 'None',
-        value: ''
-      },
-      {
-        title: 'Some class',
-        value: 'class-name'
-      }
+      title: 'None',
+      value: ''
+    },
+    {
+      title: 'Some class',
+      value: 'class-name'
+    }
     ],
     importcss_append: true,
     file_picker_callback: (callback, value, meta) => {
-      /* Provide file and text for the link dialog */
+
       if (meta.filetype === 'file') {
         callback('https://www.google.com/logos/google.jpg', {
           text: 'My text'
         });
       }
 
-      /* Provide image and alt text for the image dialog */
+
       if (meta.filetype === 'image') {
         callback('https://www.google.com/logos/google.jpg', {
           alt: 'My alt text'
         });
       }
 
-      /* Provide alternative source and posted for the media dialog */
+
       if (meta.filetype === 'media') {
         callback('movie.mp4', {
           source2: 'alt.ogg',
@@ -261,14 +244,12 @@
     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
   });
 
-  /**
-   * Initiate Bootstrap validation check
-   */
+
   var needsValidation = document.querySelectorAll('.needs-validation')
 
   Array.prototype.slice.call(needsValidation)
-    .forEach(function(form) {
-      form.addEventListener('submit', function(event) {
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
         if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
@@ -278,37 +259,20 @@
       }, false)
     })
 
-  /**
-   * Initiate Datatables
-   */
+
   const datatables = select('.datatable', true)
   datatables.forEach(datatable => {
     new simpleDatatables.DataTable(datatable, {
-      perPageSelect: [5, 10, 15, ["All", -1]],
-      columns: [{
-          select: 2,
-          sortSequence: ["desc", "asc"]
-        },
-        {
-          select: 3,
-          sortSequence: ["desc"]
-        },
-        {
-          select: 4,
-          cellClass: "green",
-          headerClass: "red"
-        }
-      ]
+      perPage: 10,
+      perPageSelect: [5, 10, 15, ["All", -1]]
     });
   })
 
-  /**
-   * Autoresize echart charts
-   */
+
   const mainContainer = select('#main');
   if (mainContainer) {
     setTimeout(() => {
-      new ResizeObserver(function() {
+      new ResizeObserver(function () {
         select('.echart', true).forEach(getEchart => {
           echarts.getInstanceByDom(getEchart).resize();
         })

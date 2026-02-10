@@ -1,0 +1,58 @@
+@model MOM.Models.DepartmentModel
+@{
+    ViewData["Title"] = "Department Details";
+}
+
+<div class="pagetitle mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="fw-bold text-dark">Department Details</h1>
+            <nav>
+                <ol class="breadcrumb bg-transparent p-0 mb-0 mt-2">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index" class="text-decoration-none">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Departments</a></li>
+                    <li class="breadcrumb-item active">Details</li>
+                </ol>
+            </nav>
+        </div>
+        <a asp-action="Index" class="btn btn-light shadow-sm border px-3"><i class="bi bi-arrow-left me-2"></i>Back</a>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="card-body p-0">
+                <div class="bg-light p-4 text-center border-bottom">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm p-4 mb-3" style="width: 100px; height: 100px;">
+                        <i class="bi bi-building text-primary" style="font-size: 2.5rem; color: #4DA8DA !important;"></i>
+                    </div>
+                    <h3 class="fw-bold mb-1">@Model.DepartmentName</h3>
+                    <p class="text-muted small mb-0">Department ID: #@Model.DepartmentID</p>
+                </div>
+                
+                <div class="p-4 p-md-5">
+                    <div class="vstack gap-3">
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-3">
+                            <span class="text-secondary fw-medium">Created On</span>
+                            <span class="fw-bold text-dark">@Model.Created.ToString("MMMM dd, yyyy")</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-3">
+                            <span class="text-secondary fw-medium">Last Modified</span>
+                            <span class="fw-bold text-dark">@Model.Modified.ToString("MMMM dd, yyyy")</span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-5">
+                        <a asp-action="Edit" asp-route-id="@Model.DepartmentID" class="btn btn-primary py-2 rounded-pill shadow-sm border-0" style="background-color: #4DA8DA;">
+                            Edit Department
+                        </a>
+                        <button onclick="if(confirm('Are you sure?')) location.href='@Url.Action("Delete", new { id = Model.DepartmentID })'" class="btn btn-light py-2 rounded-pill text-danger">
+                            Delete Department
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

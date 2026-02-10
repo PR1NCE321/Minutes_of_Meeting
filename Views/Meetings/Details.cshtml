@@ -1,0 +1,369 @@
+@model MOM.Models.MeetingsModel
+@{
+    ViewData["Title"] = "Meeting Details";
+}
+
+<style>
+    .detail-card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+    .detail-header {
+        background: linear-gradient(135deg, #4DA8DA 0%, #4495C5 100%);
+        color: white;
+        padding: 2.5rem 2rem;
+    }
+    .detail-icon-box {
+        width: 50px;
+        height: 50px;
+        background: #f8fafc;
+        color: #4DA8DA;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .label-muted {
+        color: #64748b;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+    .value-bold {
+        color: #334155;
+        font-weight: 600;
+        font-size: 1.05rem;
+    }
+    .btn-update-attendance:hover {
+        background-color: #08CB00!important;
+        border-color: #08CB00!important;
+    }
+    .form-check-input:checked {
+        background-color: #08CB00 !important;
+        border-color: #08CB00 !important;
+    }
+    .form-check-input {
+        background-color: #E55050;
+        border-color: #E55050;
+    }
+
+.add-staff-btn{
+    outline-color: #4DA8DA;
+    color: #4DA8DA;
+    border-color: #4DA8DA;
+}
+.add-staff-btn:hover{
+    background-color: #08CB00;
+    color: white;
+    border-color: #08CB00;
+}
+.present-text{
+    color: #08CB00;
+}
+    
+    
+</style>
+
+<div class="pagetitle mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="fw-bold text-dark">Meeting Details</h1>
+            <nav>
+                <ol class="breadcrumb bg-transparent p-0 mb-0 mt-2">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index" class="text-decoration-none">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Meetings</a></li>
+                    <li class="breadcrumb-item active">Details</li>
+                </ol>
+            </nav>
+        </div>
+        <a asp-action="Index" class="btn btn-light shadow-sm border px-3"><i class="bi bi-arrow-left me-2"></i>Back</a>
+    </div>
+</div>
+
+<div class="container-fluid p-0">
+    <div class="card detail-card mb-4">
+        <div class="detail-header position-relative">
+            <div class="d-flex align-items-start justify-content-between position-relative" style="z-index: 2;">
+                <div>
+                     @if (Model.IsCancelled == true)
+                     {
+                         <span class="badge bg-danger mb-3 px-3 py-2 rounded-pill shadow-sm"><i class="bi bi-x-circle me-1"></i> Cancelled</span>
+                     }
+                     else
+                     {
+                         <span class="badge bg-white text-success mb-3 px-3 py-2 rounded-pill shadow-sm"><i class="bi bi-check-circle me-1"></i> Scheduled</span>
+                     }
+                    <h2 class="display-6 fw-bold mb-1 text-white">@Model.MeetingType?.MeetingTypeName</h2>
+                    <p class="mb-0 opacity-90 fs-5"><i class="bi bi-calendar-event me-2"></i>@(Model.MeetingDate.HasValue ? Model.MeetingDate.Value.ToString("dddd, MMMM dd, yyyy") : "Date Pending") at @(Model.MeetingDate.HasValue ? Model.MeetingDate.Value.ToString("hh:mm tt") : "")</p>
+                </div>
+            </div>
+             <div class="position-absolute end-0 top-50 translate-middle-y me-5 opacity-10 d-none d-lg-block">
+                <i class="bi bi-calendar-check" style="font-size: 8rem; color: white;"></i>
+            </div>
+        </div>
+
+        <div class="card-body p-4 p-lg-5">
+            
+            <div class="row g-4 mb-5">
+                <div class="col-md-6 col-lg-3">
+                    <div class="d-flex align-items-center p-3 rounded-3 border bg-light h-100">
+                        <div class="detail-icon-box me-3 bg-white">
+                            <i class="bi bi-geo-alt"></i>
+                        </div>
+                        <div>
+                            <div class="label-muted">Venue</div>
+                            <div class="value-bold">@(Model.MeetingVenue?.MeetingVenueName ?? "N/A")</div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="col-md-6 col-lg-3">
+                    <div class="d-flex align-items-center p-3 rounded-3 border bg-light h-100">
+                        <div class="detail-icon-box me-3 bg-white">
+                            <i class="bi bi-building"></i>
+                        </div>
+                        <div>
+                            <div class="label-muted">Department</div>
+                            <div class="value-bold">@(Model.Department?.DepartmentName ?? "N/A")</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                     <div class="d-flex align-items-center p-3 rounded-3 border bg-light h-100">
+                        <div class="detail-icon-box me-3 bg-white">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <div>
+                            <div class="label-muted">Created On</div>
+                            <div class="value-bold">@Model.Created.ToString("MMM dd, yyyy")</div>
+                        </div>
+                    </div>
+                </div>
+                 
+                 <div class="col-md-6 col-lg-3">
+                     <div class="d-flex align-items-center p-3 rounded-3 border bg-light h-100">
+                        <div class="detail-icon-box me-3 bg-white">
+                            <i class="bi bi-arrow-repeat"></i>
+                        </div>
+                        <div>
+                            <div class="label-muted">Last Modified</div>
+                            <div class="value-bold">@Model.Modified.ToString("MMM dd, yyyy")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-5">
+                <div class="col-lg-8">
+                    <h5 class="fw-bold mb-3 text-dark d-flex align-items-center">
+                        <i class="bi bi-card-text me-2 text-primary"></i> Description
+                    </h5>
+                    <div class="p-4 bg-light rounded-4 border">
+                        @if(!string.IsNullOrEmpty(Model.MeetingDescription)) {
+                            <p class="mb-0 text-secondary" style="line-height: 1.7;">@Model.MeetingDescription</p>
+                        } else {
+                            <span class="fst-italic text-muted">No description provided for this meeting.</span>
+                        }
+                    </div>
+
+                     @if (Model.IsCancelled == true)
+                     {
+                         <div class="mt-4">
+                             <div class="alert alert-danger border-0 shadow-sm rounded-4 p-4" role="alert">
+                                 <div class="d-flex">
+                                     <i class="bi bi-exclamation-octagon-fill fs-3 me-3 text-danger"></i>
+                                     <div>
+                                         <h5 class="alert-heading fw-bold">Meeting Cancelled</h5>
+                                         <p class="mb-2">This meeting was cancelled on <strong>@(Model.CancellationDateTime?.ToString("MMM dd, yyyy hh:mm tt") ?? "Unknown Date")</strong>.</p>
+                                         <hr>
+                                         <p class="mb-0 small fw-bold text-uppercase opacity-75">Reason:</p>
+                                         <p class="mb-0">@Model.CancellationReason</p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     }
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm bg-light rounded-4 h-100">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-4 text-dark"><i class="bi bi-paperclip me-2 text-primary"></i> Resources</h5>
+                            
+                            @if (!string.IsNullOrEmpty(Model.DocumentPath))
+                            {
+                                <a href="@Model.DocumentPath" target="_blank" class="d-flex align-items-center p-3 bg-white rounded-3 border text-decoration-none shadow-sm mb-3 hover-scale">
+                                    <div class="rounded-circle bg-danger bg-opacity-10 text-danger p-2 me-3">
+                                        <i class="bi bi-file-earmark-pdf fs-4"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold text-dark">Meeting Document</div>
+                                        <div class="small text-muted">Click to view/download</div>
+                                    </div>
+                                    <i class="bi bi-box-arrow-up-right ms-auto text-muted"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <div class="text-center py-4 text-muted">
+                                    <i class="bi bi-file-earmark-x fs-1 opacity-25 mb-2"></i>
+                                    <p class="small mb-0">No documents attached.</p>
+                                </div>
+                            }
+
+                            <hr class="my-4 opacity-50">
+                            
+                            <h6 class="fw-bold mb-3 small text-uppercase text-muted">Quick Actions</h6>
+                             @if (Model.IsCancelled != true)
+                             {
+                                <div class="d-grid gap-2">
+                                    <a asp-action="Update" asp-route-id="@Model.MeetingID" class="btn btn-primary bg-primary border-0 rounded-pill py-2 shadow-sm">
+                                        <i class="bi bi-pencil me-2"></i>Update Details
+                                    </a>
+                                </div>
+                             }
+                             else
+                             {
+                                 <div class="d-grid">
+                                     <button class="btn btn-secondary rounded-pill py-2 disabled">Action Unavailable</button>
+                                 </div>
+                             }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                     <div class="card detail-card mb-4">
+                        <div class="card-header bg-white p-4 border-bottom d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold mb-0 text-dark d-flex align-items-center"><i class="bi bi-people me-2 text-primary"></i> Attendance</h5>
+                            @if (Model.IsCancelled != true)
+                            {
+                                <button type="button" class="add-staff-btn btn btn-outline-primary btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#addStaffModal">
+                                    <i class="bi bi-person-plus me-1"></i> Add Staff
+                                </button>
+                            }
+                        </div>
+                        <div class="card-body p-4">
+                            <form asp-action="UpdateAttendance" method="post">
+                                <input type="hidden" name="meetingId" value="@Model.MeetingID" />
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th class="ps-4">Staff Name</th>
+                                                <th>Email</th>
+                                                <th class="text-center" style="width: 150px;">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model.MeetingMembers != null && Model.MeetingMembers.Any())
+                                            {
+                                                int i = 0;
+                                                foreach (var member in Model.MeetingMembers)
+                                                {
+                                                    <tr>
+                                                        <td class="ps-4">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar-initials bg-light text-primary rounded-circle p-2 me-3 fw-bold border" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                                                    @(member.Staff?.StaffName?.Substring(0, 1).ToUpper() ?? "?")
+                                                                </div>
+                                                                <div>
+                                                                    <div class="fw-bold text-dark">@member.Staff?.StaffName</div>
+                                                                </div>
+                                                            </div>
+                                                            <input type="hidden" name="members[@i].MeetingMemberID" value="@member.MeetingMemberID" />
+                                                        </td>
+                                                        <td class="text-muted">@member.Staff?.EmailAddress</td> 
+                                                        <td class="text-center">
+                                                            <div class="form-check form-switch d-flex justify-content-center">
+                                                                <input class="form-check-input" type="checkbox" role="switch" name="members[@i].IsPresent" value="true" @(member.IsPresent ? "checked" : "") @(Model.IsCancelled == true ? "disabled" : "") />
+                                                                <input type="hidden" name="members[@i].IsPresent" value="false" />
+                                                            </div>
+                                                            @if(Model.IsCancelled == true) {
+                                                                 <div class="small text-muted mt-1" style="font-size: 0.7rem;">Meeting Cancelled</div>
+                                                            } else if (member.IsPresent) {
+                                                                <div class="present-text small  mt-1 fw-bold" style="font-size: 0.7rem;">PRESENT</div>
+                                                            } else {
+                                                                <div class="small text-danger mt-1 fw-bold" style="font-size: 0.7rem;">ABSENT</div>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    i++;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="3" class="text-center py-5 text-muted">
+                                                        <div class="mb-3"><i class="bi bi-people fs-1 opacity-25"></i></div>
+                                                        <p class="mb-0">No members added to this meeting.</p>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @if (Model.MeetingMembers != null && Model.MeetingMembers.Any() && Model.IsCancelled != true)
+                                {
+                                    <div class="text-end mt-3 pt-3 border-top">
+                                        <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm btn-update-attendance">
+                                            <i class="bi bi-check2-circle me-2"></i> Update Attendance
+                                        </button>
+                                    </div>
+                                }
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Add Staff Modal -->
+<div class="modal fade" id="addStaffModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Add Staff to Meeting</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form asp-action="AddMember" method="post">
+                    <input type="hidden" name="meetingId" value="@Model.MeetingID" />
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-muted small text-uppercase">Select Staff Member</label>
+                        <select name="staffId" class="form-select form-select-lg" required>
+                            <option value="">-- Choose Staff --</option>
+                            @if (ViewBag.StaffList != null)
+                            {
+                                foreach (var staff in ViewBag.StaffList)
+                                {
+                                    bool isAlreadyMember = Model.MeetingMembers != null && Model.MeetingMembers.Any(mm => mm.StaffID == staff.StaffID);
+                                    if (!isAlreadyMember)
+                                    {
+                                         <option value="@staff.StaffID">@staff.StaffName (@staff.Department?.DepartmentName)</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <div class="form-text">Only staff members not already in the meeting are shown.</div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill">Add to Meeting</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

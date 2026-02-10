@@ -8,12 +8,12 @@
     <link href="~/assets/img/favicon.png" rel="icon">
     <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i|Inter:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
 
-    <!-- Vendor CSS Files -->
+    
     <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
@@ -21,13 +21,11 @@
     <link href="~/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
     <link href="~/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="~/assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
     <link href="~/assets/css/style.css" rel="stylesheet">
 </head>
 
 <body>
-    @* compute current route and helper to build nav classes *@
+    
     @{
         var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
         var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
@@ -39,29 +37,25 @@
         };
     }
 
-    <!-- ======= Header ======= -->
+    
     <header id="header" class="header fixed-top d-flex align-items-center border-bottom">
 
         <div class="d-flex align-items-center justify-content-between px-3">
-            <a href="/" class="logo d-flex align-items-center text-decoration-none">
-                <img src="~/assets/img/logo.svg" alt="MOM">
+            <a href="/" class="logo text-decoration-none">
+                <img src="~/assets/img/logo.svg" alt="Logo" class="img-fluid">
             </a>
-            <i class="bi bi-list toggle-sidebar-btn text-secondary fs-5 ms-3 cursor-pointer"></i>
-        </div><!-- End Logo -->
+            <i class="bi bi-list toggle-sidebar-btn text-primary fs-3 ms-3 cursor-pointer"></i>
+        </div>
 
        
 
         <nav class="header-nav ms-auto px-4">
             <ul class="d-flex align-items-center m-0 gap-3">
-
-                
-
-                <!-- Profile Dropdown -->
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0 text-decoration-none" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2 text-dark fw-medium">Prince Kakadiya</span>
+                        <img src="~/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2 text-dark fw-bold">Prince Kakadiya</span>
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile border-0 shadow-lg p-3" style="min-width: 250px;">
@@ -98,23 +92,22 @@
                         <li>
                             <a class="dropdown-item d-flex align-items-center rounded py-2 text-danger" asp-controller="Account" asp-action="Logout">
                                 <i class="bi bi-box-arrow-right me-2"></i>
-                                <span>Sign Out</span>
+                                <span>Logout</span>
                             </a>
                         </li>
-
-                    </ul><!-- End Profile Dropdown Items -->
-                </li><!-- End Profile Nav -->
+                    </ul>
+                </li>
 
             </ul>
-        </nav><!-- End Icons Navigation -->
+        </nav>
 
-    </header><!-- End Header -->
-    <!-- ======= Sidebar ======= -->
+    </header>
+    
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
 
-            <!-- Dashboard -->
+            
             <li class="nav-item">
                 <a class="@GetNavLinkClass("Dashboard","Index")" asp-controller="Dashboard" asp-action="Index">
                     <i class="bi bi-grid"></i>
@@ -122,9 +115,9 @@
                 </a>
             </li>
 
-            <li class="nav-heading">Master Data</li>
+            <li class="nav-heading">Management</li>
 
-            <!-- Meeting Types -->
+            
             <li class="nav-item">
                 <a class="@GetNavLinkClass("MeetingType","Index")" asp-controller="MeetingType" asp-action="Index">
                     <i class="bi bi-tags"></i>
@@ -132,7 +125,7 @@
                 </a>
             </li>
 
-            <!-- Departments -->
+            
             <li class="nav-item">
                 <a class="@GetNavLinkClass("Department","Index")" asp-controller="Department" asp-action="Index">
                     <i class="bi bi-building"></i>
@@ -140,7 +133,7 @@
                 </a>
             </li>
 
-            <!-- Venues -->
+            
             <li class="nav-item">
                 <a class="@GetNavLinkClass("MeetingVenue","Index")" asp-controller="MeetingVenue" asp-action="Index">
                     <i class="bi bi-geo-alt"></i>
@@ -148,7 +141,7 @@
                 </a>
             </li>
 
-            <!-- Staff Members -->
+            
             <li class="nav-item">
                 <a class="@GetNavLinkClass("Staff","Index")" asp-controller="Staff" asp-action="Index">
                     <i class="bi bi-people"></i>
@@ -158,7 +151,7 @@
 
             <li class="nav-heading">Meetings</li>
 
-            <!-- All Meetings -->
+            
             <li class="nav-item">
                 <a class="@GetNavLinkClass("Meetings","Index")" asp-controller="Meetings" asp-action="Index">
                     <i class="bi bi-calendar-check"></i>
@@ -166,7 +159,7 @@
                 </a>
             </li>
 
-            <!-- Schedule Meeting -->
+            
             <li class="nav-item">
                 <a class="@GetNavLinkClass("Meetings","Create")" asp-controller="Meetings" asp-action="Create">
                     <i class="bi bi-plus-circle"></i>
@@ -174,7 +167,7 @@
                 </a>
             </li>
 
-            <!-- Attendance -->
+            
             <li class="nav-item">
                 <a class="@GetNavLinkClass("MeetingMember","Index")" asp-controller="MeetingMember" asp-action="Index">
                     <i class="bi bi-card-checklist"></i>
@@ -185,7 +178,7 @@
         </ul>
 
 
-    </aside><!-- End Sidebar-->
+    </aside>
     <div class="container">
 
         <main id="main" class="main">
@@ -193,7 +186,6 @@
         </main>
 
     </div>
-
 
     <script src="~/assets/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -204,8 +196,19 @@
     <script src="~/assets/vendor/tinymce/tinymce.min.js"></script>
     <script src="~/assets/vendor/php-email-form/validate.js"></script>
 
-    <!-- Template Main JS File -->
     <script src="~/assets/js/main.js"></script>
+    <script>
+        // Auto-dismiss alerts after 1.5 seconds (1500ms)
+        document.addEventListener('DOMContentLoaded', function() {
+            var alerts = document.querySelectorAll('.alert-dismissible');
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    var bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }, 1500);
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

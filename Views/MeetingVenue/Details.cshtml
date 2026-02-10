@@ -1,0 +1,95 @@
+@model MOM.Models.MeetingVenueModel
+@{
+    ViewData["Title"] = "Venue Details";
+}
+
+<div class="pagetitle mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="fw-bold text-dark">Venue Details</h1>
+            <nav>
+                <ol class="breadcrumb bg-transparent p-0 mb-0 mt-2">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index" class="text-decoration-none">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Venues</a></li>
+                    <li class="breadcrumb-item active">Details</li>
+                </ol>
+            </nav>
+        </div>
+        <a asp-action="Index" class="btn btn-light shadow-sm border px-3"><i class="bi bi-arrow-left me-2"></i>Back</a>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="card-header border-0 py-4 px-4 text-white position-relative" style="background: linear-gradient(135deg, #372784 0%, #4495C5 100%);">
+                 <div class="d-flex align-items-center position-relative" style="z-index: 2;">
+                    <div class="rounded-circle bg-white bg-opacity-25 p-3 me-3 text-white">
+                        <i class="bi bi-geo-alt fs-2"></i>
+                    </div>
+                    <div>
+                        <span class="text-uppercase small opacity-75 letter-spacing-1 fw-bold">Venue Name</span>
+                        <h2 class="mb-0 fw-bold">@Model.MeetingVenueName</h2>
+                    </div>
+                </div>
+                 <!-- Decorative bg icon -->
+                <i class="bi bi-building position-absolute end-0 bottom-0 text-white opacity-10" style="font-size: 8rem; margin-right: -1rem; margin-bottom: -1.5rem;"></i>
+            </div>
+            
+            <div class="card-body p-5">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100 border">
+                            <label class="small text-muted fw-bold text-uppercase mb-1">Status</label>
+                            <div class="d-flex align-items-center text-success fw-bold">
+                                <i class="bi bi-check-circle-fill me-2"></i> Available
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100 border">
+                            <label class="small text-muted fw-bold text-uppercase mb-1">Capacity</label>
+                             <div class="d-flex align-items-center text-dark fw-bold">
+                                <i class="bi bi-people-fill me-2 text-primary"></i> Standard Room Size
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4 opacity-10">
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center text-muted">
+                            <i class="bi bi-calendar-plus me-2"></i>
+                            <span class="small">Created: @Model.Created.ToString("MMM dd, yyyy")</span>
+                        </div>
+                    </div>
+                     <div class="col-6 text-end">
+                        <div class="d-flex align-items-center justify-content-end text-muted">
+                            <i class="bi bi-clock-history me-2"></i>
+                            <span class="small">Last Updated: @Model.Modified.ToString("MMM dd, yyyy")</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-3 mt-5">
+                    <button class="btn btn-outline-danger px-4 rounded-pill" onclick="confirmDelete(@Model.MeetingVenueID)">
+                        <i class="bi bi-trash me-2"></i>Delete
+                    </button>
+                    <a asp-action="Edit" asp-route-id="@Model.MeetingVenueID" class="btn btn-primary px-4 rounded-pill shadow-sm bg-primary border-0">
+                        <i class="bi bi-pencil me-2"></i>Edit Venue
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(id) {
+        if(confirm('Are you sure you want to delete this venue?')) {
+            window.location.href = '@Url.Action("Delete")/' + id;
+        }
+    }
+</script>

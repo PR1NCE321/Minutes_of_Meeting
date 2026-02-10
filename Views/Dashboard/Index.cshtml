@@ -6,9 +6,9 @@
 
 <style>
     :root {
-        --saas-primary: #0f172a;
-        --saas-secondary: #64748b;
-        --saas-bg: #f8fafc;
+        --saas-primary: #4DA8DA;
+        --saas-secondary: #80D8C3;
+        --saas-bg: #F5F5F5;
         --saas-card-bg: #ffffff;
     }
 
@@ -36,10 +36,10 @@
         margin-bottom: 1rem;
     }
 
-    .icon-box-primary { background-color: #eff6ff; color: #3b82f6; } /* Blue */
-    .icon-box-success { background-color: #f0fdf4; color: #22c55e; } /* Green */
-    .icon-box-warning { background-color: #fefce8; color: #eab308; } /* Yellow */
-    .icon-box-danger  { background-color: #fef2f2; color: #ef4444; } /* Red */
+    .icon-box-primary { background-color: #e6f6fd; color: #4DA8DA; } 
+    .icon-box-success { background-color: #e6fcf8; color: #80D8C3; } 
+    .icon-box-warning { background-color: #FFF7DB; color: #D1AE45; } 
+    .icon-box-danger  { background-color: #fef2f2; color: #ef4444; } 
 
     .metric-label {
         color: #64748b;
@@ -86,7 +86,7 @@
 
 <div class="container-fluid py-4">
 
-    <!-- Header Section -->
+    
     <div class="row align-items-center mb-5">
         <div class="col-md-8">
             <h1 class="fw-bold text-dark mb-1">Overview</h1>
@@ -94,17 +94,17 @@
         </div>
     </div>
 
-    <!-- Metrics Grid -->
+    
     <div class="row g-4 mb-5">
         
-        <!-- Metric 1 -->
+        
         <div class="col-xl-3 col-sm-6">
             <div class="saas-card h-100 p-4">
                 <div class="d-flex justify-content-between align-items-start">
                     <div class="icon-box icon-box-primary">
                         <i class="bi bi-calendar4-event"></i>
                     </div>
-                     <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-2">Live</span>
+                     <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-2">Live</span>
                 </div>
                 <div class="metric-value">@Model.TotalMeetings</div>
                 <div class="metric-label">Total Meetings</div>
@@ -112,7 +112,7 @@
             </div>
         </div>
 
-        <!-- Metric 2 -->
+        
         <div class="col-xl-3 col-sm-6">
             <div class="saas-card h-100 p-4">
                 <div class="d-flex justify-content-between align-items-start">
@@ -126,7 +126,7 @@
             </div>
         </div>
 
-        <!-- Metric 3 -->
+        
         <div class="col-xl-3 col-sm-6">
             <div class="saas-card h-100 p-4">
                 <div class="d-flex justify-content-between align-items-start">
@@ -140,7 +140,7 @@
             </div>
         </div>
 
-        <!-- Metric 4 -->
+        
         <div class="col-xl-3 col-sm-6">
             <div class="saas-card h-100 p-4">
                 <div class="d-flex justify-content-between align-items-start">
@@ -159,26 +159,26 @@
 
     </div>
 
-    <!-- Charts & Actions Split -->
-    <div class="row g-4">
+    
+    <!-- Main Charts Row -->
+    <div class="row g-4 mb-4">
         
-        <!-- Main Chart Area -->
+        <!-- Monthly Trends Line Chart -->
         <div class="col-lg-8">
             <div class="saas-card p-4 h-100">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h5 class="fw-bold mb-0">Meeting Analytics</h5>
-                        <p class="text-secondary small mb-0">Growth and frequency over time</p>
+                        <p class="text-secondary small mb-0">Monthly meeting volume (Last 6 Months)</p>
                     </div>
-                    <button class="btn btn-light btn-sm rounded-circle"><i class="bi bi-three-dots"></i></button>
                 </div>
                 <div style="position: relative; height: 320px; width: 100%;">
-                    <canvas id="mainChart"></canvas>
+                    <canvas id="trendsChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- Quick Actions Panel -->
+        <!-- Quick Actions (Keep existing) -->
         <div class="col-lg-4">
             <div class="saas-card p-4 h-100">
                 <h5 class="fw-bold mb-3">Quick Actions</h5>
@@ -210,24 +210,65 @@
                         </div>
                         <i class="bi bi-chevron-right ms-auto text-muted"></i>
                     </a>
-
-                     <a asp-controller="MeetingVenue" asp-action="Create" class="action-btn-modern">
-                        <i class="bi bi-geo me-3 text-info fs-5"></i>
-                        <div>
-                            <div class="fw-bold">Add Venue</div>
-                            <small class="text-secondary">Manage locations</small>
-                        </div>
-                        <i class="bi bi-chevron-right ms-auto text-muted"></i>
-                    </a>
                 </div>
 
                 <div class="mt-4 pt-3 border-top">
-                    <div class="d-flex justify-content-between text-secondary small">
-                        <span>Total Venues Available</span>
-                        <span class="fw-bold text-dark">@Model.TotalVenues</span>
-                    </div>
+                     <p class="small text-muted mb-0">
+                         Create records quickly to keep your organization up to date.
+                     </p>
                 </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Secondary Charts Row -->
+    <div class="row g-4 mb-4">
+        
+        <!-- Departments Doughnut -->
+        <div class="col-md-6">
+            <div class="saas-card p-4 h-100">
+                <h6 class="fw-bold text-dark mb-3">Meetings by Department</h6>
+                <div style="height: 250px; display: flex; justify-content: center;">
+                    <canvas id="deptChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+         <!-- Meeting Types Bar -->
+        <div class="col-md-6">
+            <div class="saas-card p-4 h-100">
+                <h6 class="fw-bold text-dark mb-3">Meetings by Type</h6>
+                 <div style="height: 250px;">
+                    <canvas id="typeChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Tertiary Charts Row (New) -->
+    <div class="row g-4">
+        
+        <!-- Venue Utilization -->
+        <div class="col-md-5">
+            <div class="saas-card p-4 h-100">
+                <h6 class="fw-bold text-dark mb-3">Top Venues</h6>
+                 <div style="height: 250px; display: flex; justify-content: center;">
+                    <canvas id="venueChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+         <!-- Top Staff Contributors -->
+        <div class="col-md-7">
+            <div class="saas-card p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="fw-bold text-dark mb-0">Most Active Staff</h6>
+                    <span class="badge bg-light text-secondary border">Participation Count</span>
+                </div>
+                 <div style="height: 250px;">
+                    <canvas id="staffChart"></canvas>
+                </div>
             </div>
         </div>
 
@@ -238,57 +279,173 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const ctx = document.getElementById('mainChart').getContext('2d');
         
-        // Use real data from model essentially
-        const total = @Model.TotalMeetings;
-        const cancelled = @Model.CancelledMeetings;
-        const active = total - cancelled;
+        // --- 1. Monthly Trends Chart ---
+        const trendsCtx = document.getElementById('trendsChart').getContext('2d');
+        const monthLabels = @Html.Raw(Json.Serialize(Model.MonthLabels));
+        const monthCounts = @Html.Raw(Json.Serialize(Model.MonthlyCounts));
 
-        new Chart(ctx, {
+        new Chart(trendsCtx, {
             type: 'line',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], // Static for now as we don't have historical data model
+                labels: monthLabels.length > 0 ? monthLabels : ['No Data'],
                 datasets: [{
-                    label: 'Total Meetings',
-                    data: [5, 10, 8, 15, 12, total],
-                    borderColor: '#4f46e5',
-                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    label: 'Meetings',
+                    data: monthCounts.length > 0 ? monthCounts : [0],
+                    borderColor: '#4DA8DA',
+                    backgroundColor: 'rgba(77, 168, 218, 0.1)',
                     tension: 0.4,
-                    fill: true
+                    fill: true,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
                 },
-                {
-                    label: 'Cancelled',
-                    data: [0, 1, 0, 2, 1, cancelled],
-                    borderColor: '#ef4444',
-                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                    tension: 0.4,
-                    fill: true
+                scales: {
+                    y: {
+                         beginAtZero: true,
+                         grid: { borderDash: [2, 2] },
+                         ticks: { precision: 0 }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // --- 2. Departments Doughnut Chart ---
+        const deptCtx = document.getElementById('deptChart').getContext('2d');
+        const deptNames = @Html.Raw(Json.Serialize(Model.DepartmentNames));
+        const deptCounts = @Html.Raw(Json.Serialize(Model.DepartmentCounts));
+        const hasDeptData = deptNames.length > 0;
+        
+        new Chart(deptCtx, {
+            type: 'doughnut',
+            data: {
+                labels: hasDeptData ? deptNames : ['No Data'],
+                datasets: [{
+                    data: hasDeptData ? deptCounts : [1],
+                    backgroundColor: [
+                        '#4DA8DA', '#80D8C3', '#FFD166', '#EF476F', '#118AB2', '#073B4C'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { boxWidth: 12 } }
+                },
+                cutout: '70%'
+            }
+        });
+
+         // --- 3. Meeting Types Bar Chart ---
+        const typeCtx = document.getElementById('typeChart').getContext('2d');
+        const typeNames = @Html.Raw(Json.Serialize(Model.MeetingTypeNames));
+        const typeCounts = @Html.Raw(Json.Serialize(Model.MeetingTypeCounts));
+        const hasTypeData = typeNames.length > 0;
+
+        new Chart(typeCtx, {
+            type: 'bar',
+            data: {
+                labels: hasTypeData ? typeNames : ['No Data'],
+                datasets: [{
+                    label: 'Count',
+                    data: hasTypeData ? typeCounts : [0],
+                    backgroundColor: '#80D8C3',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                     y: {
+                         beginAtZero: true,
+                         ticks: { precision: 0 }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // --- 4. Venues Polar Area Chart (New) ---
+        const venueCtx = document.getElementById('venueChart').getContext('2d');
+        const venueNames = @Html.Raw(Json.Serialize(Model.VenueNames));
+        const venueCounts = @Html.Raw(Json.Serialize(Model.VenueCounts));
+        const hasVenueData = venueNames.length > 0;
+
+        new Chart(venueCtx, {
+            type: 'pie',
+            data: {
+                labels: hasVenueData ? venueNames : ['No Data'],
+                datasets: [{
+                    data: hasVenueData ? venueCounts : [1],
+                    backgroundColor: [
+                        '#4DA8DA', '#80D8C3', '#FFD166', '#EF476F', '#118AB2', '#073B4C'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                  plugins: {
-                    legend: {
-                        position: 'top',
-                    }
+                    legend: { position: 'right', labels: { boxWidth: 12 } }
+                }
+            }
+        });
+
+        // --- 5. Active Staff Horizontal Bar Chart (New) ---
+        const staffCtx = document.getElementById('staffChart').getContext('2d');
+        const staffNames = @Html.Raw(Json.Serialize(Model.StaffNames));
+        const staffCounts = @Html.Raw(Json.Serialize(Model.StaffCounts));
+        const hasStaffData = staffNames.length > 0;
+
+        new Chart(staffCtx, {
+            type: 'bar',
+            data: {
+                labels: hasStaffData ? staffNames : ['No Data'],
+                datasets: [{
+                    label: 'Meetings Attended',
+                    data: hasStaffData ? staffCounts : [0],
+                    backgroundColor: '#118AB2',
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                indexAxis: 'y', // Horizontal bar
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
                 },
                 scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            display: true,
-                            borderDash: [2, 2]
-                        }
-                    },
                      x: {
-                        grid: {
-                            display: false
-                        }
+                         beginAtZero: true,
+                         ticks: { precision: 0 }
+                    },
+                    y: {
+                        grid: { display: false }
                     }
                 }
             }
         });
+
     });
 </script>

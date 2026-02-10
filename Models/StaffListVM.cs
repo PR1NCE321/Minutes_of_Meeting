@@ -10,5 +10,8 @@ public class StaffListVM
 
     public string? EmailAddress { get; set; }
     public string? MobileNo { get; set; }
+    
+    public int TotalMeetings { get; set; }
+    public double AttendanceRate { get; set; }
 }
 

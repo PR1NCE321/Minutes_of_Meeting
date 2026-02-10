@@ -10,6 +10,8 @@ public class DepartmentModel
     [Key]
     public int DepartmentID { get; set; }
 
+    [Display(Name = "Department Name")]
+    [Required(ErrorMessage = "Please enter department name")]
     [StringLength(100)]
     public string DepartmentName { get; set; }
 

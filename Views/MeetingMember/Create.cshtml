@@ -1,4 +1,4 @@
-﻿@model MOM.Models.MeetingMemberModel
+@model MOM.Models.MeetingMemberModel
 
 @{
     ViewData["Title"] = "Add Meeting Member";
@@ -16,7 +16,7 @@
 <div class="row justify-content-center">
     <div class="col-lg-6">
         <div class="card shadow-sm border-0">
-             <div class="card-header text-white py-3" style="background: linear-gradient(to right, #6366f1, #818cf8);">
+             <div class="card-header text-white py-3" style="background: #4DA8DA;">
                 <h5 class="mb-0"><i class="bi bi-person-check me-2"></i> Add Participant</h5>
             </div>
             <div class="card-body p-4">
@@ -24,7 +24,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                     <div class="row g-4">
-                        <!-- Meeting -->
+                        
                         <div class="col-12">
                             <label asp-for="MeetingID" class="form-label fw-semibold">Meeting Context</label>
                             <div class="input-group">
@@ -36,7 +36,7 @@
                             <span asp-validation-for="MeetingID" class="text-danger small"></span>
                         </div>
 
-                        <!-- Staff Member -->
+                        
                         <div class="col-12">
                              <label asp-for="StaffID" class="form-label fw-semibold">Staff Member</label>
                             <div class="input-group">
@@ -48,7 +48,7 @@
                             <span asp-validation-for="StaffID" class="text-danger small"></span>
                         </div>
 
-                         <!-- Attendance Status -->
+                         
                         <div class="col-12">
                              <label asp-for="IsPresent" class="form-label fw-semibold">Attendance Status</label>
                              <div class="input-group">
@@ -60,7 +60,7 @@
                             </div>
                         </div>
 
-                         <!-- Remarks -->
+                         
                         <div class="col-12">
                             <label asp-for="Remarks" class="form-label fw-semibold">Remarks</label>
                             <textarea asp-for="Remarks" class="form-control" rows="3" placeholder="Enter any specific remarks..."></textarea>
@@ -72,7 +72,7 @@
                         <a asp-action="Index" class="text-decoration-none text-muted me-3">
                             <i class="bi bi-arrow-left me-1"></i> Back
                         </a>
-                        <button type="submit" class="btn btn-primary px-4" style="background-color: #4f46e5;">
+                        <button type="submit" class="btn btn-primary px-4" style="background-color: #4DA8DA;">
                             <i class="bi bi-check-circle me-1"></i> Save Record
                         </button>
                     </div>
@@ -86,3 +86,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+

@@ -1,0 +1,67 @@
+@model MOM.Models.MeetingTypeModel
+@{
+    ViewData["Title"] = "Meeting Type Details";
+}
+
+<div class="pagetitle mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="fw-bold text-dark">Meeting Type Details</h1>
+            <nav>
+                <ol class="breadcrumb bg-transparent p-0 mb-0 mt-2">
+                    <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index" class="text-decoration-none">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Meeting Types</a></li>
+                    <li class="breadcrumb-item active">Details</li>
+                </ol>
+            </nav>
+        </div>
+        <a asp-action="Index" class="btn btn-light shadow-sm border px-3"><i class="bi bi-arrow-left me-2"></i>Back</a>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-lg rounded-4">
+            <div class="card-body p-5">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="rounded-3 bg-primary bg-opacity-10 p-3 me-3">
+                        <i class="bi bi-tags-fill text-primary fs-3" style="color: #372784 !important;"></i>
+                    </div>
+                    <div>
+                        <h2 class="h4 fw-bold mb-0">@Model.MeetingTypeName</h2>
+                        <span class="badge bg-light text-secondary border mt-1">Active Type</span>
+                    </div>
+                </div>
+
+                <div class="bg-light p-4 rounded-3 mb-4 border-start border-4" style="border-color: #4DA8DA !important;">
+                    <h6 class="fw-bold text-uppercase small text-muted mb-2">Remarks / Description</h6>
+                    @if (!string.IsNullOrEmpty(Model.Remarks))
+                    {
+                        <p class="mb-0 text-dark">@Model.Remarks</p>
+                    }
+                    else
+                    {
+                        <p class="mb-0 text-muted fst-italic">No remarks provided.</p>
+                    }
+                </div>
+
+                <div class="row g-3 text-muted small">
+                    <div class="col-sm-6">
+                        <i class="bi bi-calendar me-2"></i>Created: @Model.Created.ToString("g")
+                    </div>
+                    <div class="col-sm-6">
+                        <i class="bi bi-pencil me-2"></i>Modified: @Model.Modified.ToString("g")
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a asp-action="Edit" asp-route-id="@Model.MeetingTypeID" class="btn btn-primary px-4 rounded-pill shadow-sm border-0" style="background-color: #372784;">
+                        <i class="bi bi-pencil-square me-2"></i>Edit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

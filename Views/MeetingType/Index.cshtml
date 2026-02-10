@@ -1,99 +1,173 @@
-﻿@model IEnumerable<MOM.Models.MeetingTypeModel>
+@model IEnumerable<MOM.Models.MeetingTypeModel>
 
 @{
     ViewData["Title"] = "Meeting Types";
 }
 
-<div class="pagetitle mb-4">
-    <div class="d-flex justify-content-between align-items-center">
+<style>
+    .pagination .page-link {
+        color: black;
+    }
+    .pagination .page-item.active .page-link {
+        background-color: #4DA8DA;
+        border-color: #4DA8DA;
+        color: #fff;
+    }
+    .pagination .page-link:hover {
+        color: #3b8cc4;
+        background-color: #e9ecef;
+    }
+
+    .meeting-type-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-top: 5px solid #4DA8DA;
+        background: #fff;
+    }
+
+    .meeting-type-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
+        border-top-color: #2c88ba;
+    }
+
+    .icon-box {
+        width: 50px;
+        height: 50px;
+        background-color: #edf7fc;
+        color: #4DA8DA;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        font-size: 1.4rem;
+    }
+</style>
+
+<div class="container-fluid py-4">
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <i class="bi bi-check-circle me-1"></i>
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Header Section -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5">
         <div>
-            <h1>Meeting Types</h1>
+            <h1 class="fw-bold text-dark">Meeting Types</h1>
             <nav>
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Master Data</li>
-                    <li class="breadcrumb-item active">Meeting Types</li>
+                    <li class="breadcrumb-item"><a href="/" class="text-decoration-none text-muted">Home</a></li>
+                    <li class="breadcrumb-item active">Administration</li>
+                    <li class="breadcrumb-item active text-primary">Meeting Types</li>
                 </ol>
             </nav>
         </div>
-        <div>
-            <a asp-action="Create" class="btn btn-primary">
-                <i class="bi bi-plus-circle me-1"></i> Add Meeting Type
+        <div class="mt-3 mt-md-0">
+            <a asp-action="Create" class="btn btn-primary shadow-sm px-4 rounded-pill py-2" style="background-color: #4DA8DA; border: none;">
+                <i class="bi bi-plus-lg me-2"></i>Create Type
             </a>
         </div>
     </div>
-</div>
 
-<!-- Search & Filters -->
-<div class="card mb-4 shadow-sm border-0">
-    <div class="card-header text-white" style="background-color: #6366f1;">
-        <i class="bi bi-funnel me-2"></i> Search
-    </div>
-    <div class="card-body py-4">
-        <form class="row g-3">
-             <div class="col-md-10">
-                <label class="form-label small text-muted fw-bold">Search Meeting Type</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search by name...">
-                    <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+    <!-- Search Section -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-pill overflow-hidden">
+                <div class="card-body p-1 ps-4">
+                    <form asp-action="Index" method="get" class="d-flex align-items-center">
+                        <i class="bi bi-search text-muted me-3"></i>
+                        <input type="text" name="SearchText" class="form-control border-0 shadow-none" placeholder="Search meeting types..." value="@ViewBag.CurrentSearchText" style="height: 50px;">
+                        <button type="submit" class="btn btn-primary rounded-pill px-5 m-1 fw-bold" style="background-color: #4DA8DA; border: none; height: 46px;">Search</button>
+                    </form>
                 </div>
             </div>
-             <div class="col-md-2 d-flex align-items-end">
-                <button type="button" class="btn btn-primary w-100" style="background-color: #4f46e5;">
-                    <i class="bi bi-search me-1"></i> Search
-                </button>
+             <div class="text-center mt-2">
+                <small class="text-muted">Found @ViewBag.TotalRecords meeting types</small>
             </div>
-        </form>
-    </div>
-</div>
-
-<div class="card shadow-sm border-0">
-    <div class="card-header text-white" style="background-color: #6366f1;">
-        <i class="bi bi-tags me-2"></i> Meeting Types List
-    </div>
-    <div class="card-body p-0">
-         <div class="table-responsive">
-            <table class="table table-hover table-large-font align-middle mb-0">
-                <thead class="bg-light text-secondary small text-uppercase">
-                    <tr>
-                         <th class="ps-4">#</th>
-                        <th class="text-nowrap">Meeting Type Name</th>
-                        <th>Remarks</th>
-                        <th class="text-end pe-4 text-nowrap">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="border-top-0">
-                    @if (Model != null && Model.Any())
-                    {
-                        int i = 1;
-                        foreach (var item in Model)
-                        {
-                            <tr>
-                                <td class="ps-4 text-muted">@i</td>
-                                <td class="fw-bold text-dark text-nowrap">@item.MeetingTypeName</td>
-                                <td class="text-muted">@item.Remarks</td>
-                                <td class="text-end pe-4 text-nowrap">
-                                    <a asp-action="Update" asp-route-id="@item.MeetingTypeID" class="btn btn-light btn-sm text-success" title="Edit">
-                                        <i class="bi bi-pencil-square fs-5"></i>
-                                    </a>
-                                    <a asp-action="Delete" asp-route-id="@item.MeetingTypeID" class="btn btn-light btn-sm text-danger ms-2" title="Delete" onclick="return confirm('Are you sure you want to delete this Meeting Type?');">
-                                        <i class="bi bi-trash fs-5"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            i++;
-                        }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="4" class="text-center text-muted py-4">
-                                No Meeting Types Found
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
         </div>
     </div>
+
+    <!-- Content Grid -->
+    <div class="row g-4">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-xl-4">
+                    <div class="card meeting-type-card h-100 shadow-sm rounded-4 p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="icon-box">
+                                <i class="bi bi-tags-fill"></i>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-three-dots fs-4"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+                                    <li><a class="dropdown-item py-2" asp-action="Details" asp-route-id="@item.MeetingTypeID"><i class="bi bi-eye me-2 text-primary"></i> View Details</a></li>
+                                    <li><a class="dropdown-item py-2" asp-action="Update" asp-route-id="@item.MeetingTypeID"><i class="bi bi-pencil me-2 text-success"></i> Update</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item py-2 text-danger" asp-action="Delete" asp-route-id="@item.MeetingTypeID" onclick="return confirm('Confirm delete?');"><i class="bi bi-trash me-2"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h4 class="fw-bold text-dark mb-2">@item.MeetingTypeName</h4>
+                        <p class="text-muted small flex-grow-1">
+                            @(string.IsNullOrEmpty(item.Remarks) ? "No remarks added for this meeting type." : item.Remarks)
+                        </p>
+
+                        <div class="d-flex align-items-center justify-content-center mt-3 pt-3 border-top text-muted small w-100">
+                            <i class="bi bi-clock me-1"></i> Updated Recently
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+             <div class="col-12 text-center py-5">
+                <i class="bi bi-inbox text-muted display-1 opacity-25"></i>
+                <p class="text-muted mt-3">No meeting types found matching your query.</p>
+            </div>
+        }
+    </div>
+
+   @if (ViewBag.TotalPages > 1)
+    {
+        <div class="d-flex justify-content-center mt-5">
+            <nav>
+                <ul class="pagination pagination-md">
+                     <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                        <a class="page-link border-0 bg-transparent" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)" asp-route-SearchText="@ViewBag.CurrentSearchText">Previous</a>
+                    </li>
+                     @for (int p = 1; p <= ViewBag.TotalPages; p++)
+                    {
+                        <li class="page-item @(ViewBag.CurrentPage == p ? "active" : "")">
+                             <a class="page-link rounded-circle mx-1 border-0 shadow-sm d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;" asp-action="Index" asp-route-page="@p" asp-route-SearchText="@ViewBag.CurrentSearchText">@p</a>
+                        </li>
+                    }
+                     <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                        <a class="page-link border-0 bg-transparent" asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)" asp-route-SearchText="@ViewBag.CurrentSearchText">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    }
+
 </div>
+

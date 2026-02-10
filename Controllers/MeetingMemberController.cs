@@ -20,7 +20,7 @@ namespace MOM.Controllers
             _context = context;
         }
 
-        // ===================== INDEX =====================
+        
         public IActionResult Index()
         {
             List<AttendanceVM> list = new();
@@ -53,7 +53,7 @@ namespace MOM.Controllers
             return View(list);
         }
 
-        // ===================== CREATE (GET) =====================
+        
         public async Task<IActionResult> Create()
         {
             await LoadDropdowns();
@@ -64,7 +64,7 @@ namespace MOM.Controllers
         {
             ViewBag.MeetingList = await _context.Meetings
                 .FromSqlRaw("EXEC PR_MOM_Meetings_SelectAll")
-                .Select(m => new { m.MeetingID, DisplayName = m.MeetingDate.ToString("dd MMM yyyy") + " - " + m.MeetingDescription })
+                .Select(m => new { m.MeetingID, DisplayName = (m.MeetingDate.HasValue ? m.MeetingDate.Value.ToString("dd MMM yyyy") : "N/A") + " - " + m.MeetingDescription })
                 .ToListAsync();
 
             ViewBag.StaffList = await _context.Staff
@@ -72,7 +72,7 @@ namespace MOM.Controllers
                 .ToListAsync();
         }
 
-        // ===================== CREATE (POST) =====================
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(MeetingMemberModel model)
@@ -94,14 +94,26 @@ namespace MOM.Controllers
             return View(model);
         }
 
-        // ===================== DELETE =====================
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _context.Database.ExecuteSqlRawAsync(
-                "EXEC PR_MOM_MeetingMember_DeleteByPK {0}", id
-            );
+            try
+            {
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PR_MOM_MeetingMember_DeleteByPK {0}", id
+                );
+                TempData["Success"] = "Attendance record deleted successfully.";
+            }
+            catch (SqlException ex) when (ex.Number == 547)
+            {
+                 TempData["Error"] = "Cannot delete this record because it is referenced by other data.";
+            }
+             catch (Exception)
+            {
+                TempData["Error"] = "An error occurred while deleting the record.";
+            }
 
             return RedirectToAction(nameof(Index));
         }

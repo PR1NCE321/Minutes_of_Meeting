@@ -1,0 +1,62 @@
+@model MOM.Models.MeetingTypeModel
+
+@{
+    ViewData["Title"] = "Update Meeting Type";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <!-- Decorative Top Border -->
+                <div class="bg-primary" style="height: 6px; --bs-bg-opacity: 0.8; background: linear-gradient(90deg, #4DA8DA 0%, #a4daf7 100%);"></div>
+
+                <div class="card-body p-5">
+                    
+                    <div class="text-center mb-5">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle shadow-sm mb-4" style="width: 80px; height: 80px;">
+                            <i class="bi bi-tag text-primary fs-1" style="color: #4DA8DA !important;"></i>
+                        </div>
+                        <h2 class="fw-bold text-dark">Edit Meeting Type</h2>
+                         <p class="text-muted">Modify the details for <strong>@Model.MeetingTypeName</strong>.</p>
+                    </div>
+
+                    <form asp-action="Update">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        <input type="hidden" asp-for="MeetingTypeID" />
+                        <input type="hidden" asp-for="Created" />
+
+                        <div class="form-floating mb-4">
+                            <input asp-for="MeetingTypeName" class="form-control rounded-3 border-light bg-light fw-bold text-dark" id="floatingInputName" placeholder="Meeting Type Name">
+                            <label for="floatingInputName" class="text-muted">Type Name</label>
+                            <span asp-validation-for="MeetingTypeName" class="text-danger small ms-1"></span>
+                        </div>
+
+                        <div class="form-floating mb-5">
+                            <textarea asp-for="Remarks" class="form-control rounded-3 border-light bg-light" placeholder="Remarks" id="floatingTextarea" style="height: 120px"></textarea>
+                            <label for="floatingTextarea" class="text-muted">Remarks (Optional)</label>
+                            <span asp-validation-for="Remarks" class="text-danger small ms-1"></span>
+                        </div>
+
+                        <div class="d-grid gap-3">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold shadow-sm py-3" style="background-color: #4DA8DA; border: none;">
+                                <i class="bi bi-cloud-arrow-up me-2"></i> Update Meeting Type
+                            </button>
+                            <a asp-action="Index" class="btn btn-light btn-lg rounded-pill fw-bold text-muted py-3">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-4 text-muted small">
+                <i class="bi bi-info-circle me-1"></i> Changes will be reflected in all related meetings.
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

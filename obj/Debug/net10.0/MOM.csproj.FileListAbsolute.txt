@@ -1,5 +1,7 @@
 C:\Users\kakad\source\repos\MOM\MOM\bin\Debug\net10.0\appsettings.Development.json
 C:\Users\kakad\source\repos\MOM\MOM\bin\Debug\net10.0\appsettings.json
+C:\Users\kakad\source\repos\MOM\MOM\bin\Debug\net10.0\package-lock.json
+C:\Users\kakad\source\repos\MOM\MOM\bin\Debug\net10.0\package.json
 C:\Users\kakad\source\repos\MOM\MOM\bin\Debug\net10.0\MOM.staticwebassets.runtime.json
 C:\Users\kakad\source\repos\MOM\MOM\bin\Debug\net10.0\MOM.staticwebassets.endpoints.json
 C:\Users\kakad\source\repos\MOM\MOM\bin\Debug\net10.0\MOM.exe
@@ -150,15 +152,17 @@ C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\MOM.csproj.CoreCompileInpu
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\MOM.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\MOM.RazorAssemblyInfo.cache
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\MOM.RazorAssemblyInfo.cs
+C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\MOM.sourcelink.json
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\rjimswa.dswa.cache.json
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\scopedcss\bundle\MOM.styles.css
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\scopedcss\projectbundle\MOM.bundle.scp.css
-C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\on2s9i1kuk-{0}-6ewleqajay-6ewleqajay.gz
+C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\uv41tlz6b2-{0}-n30jpf40ax-n30jpf40ax.gz
+C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\on2s9i1kuk-{0}-fg1ucugdf4-fg1ucugdf4.gz
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\ebg96rvb19-{0}-1btxpmx81r-1btxpmx81r.gz
-C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\bs29xfjatu-{0}-8q78rmbpvf-8q78rmbpvf.gz
+C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\bs29xfjatu-{0}-56ozfglw0y-56ozfglw0y.gz
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\ru3dclc4zh-{0}-ive1fon2cn-ive1fon2cn.gz
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\hzhmyzy93d-{0}-desdzcnoj1-desdzcnoj1.gz
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\csa1m2bdgx-{0}-dnf7dhsljn-dnf7dhsljn.gz
@@ -586,8 +590,8 @@ C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\aswdg8b45k-{0}-
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\fcxe7xu4iu-{0}-muycvpuwrr-muycvpuwrr.gz
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\5v5belrh8f-{0}-87fc7y1x7t-87fc7y1x7t.gz
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\ayxg4r5kkf-{0}-mlv21k5csn-mlv21k5csn.gz
-C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\iv7hl8t1ek-{0}-z1dxidpcmm-z1dxidpcmm.gz
-C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\xxv0i3cgje-{0}-z1dxidpcmm-z1dxidpcmm.gz
+C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\iv7hl8t1ek-{0}-9zn7ae5equ-9zn7ae5equ.gz
+C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\xxv0i3cgje-{0}-9zn7ae5equ-9zn7ae5equ.gz
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\staticwebassets.build.json
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\staticwebassets.development.json
@@ -599,5 +603,4 @@ C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\refint\MOM.dll
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\MOM.pdb
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\MOM.genruntimeconfig.cache
 C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\ref\MOM.dll
-C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\06cozjskh2-{0}-ha0knxnqem-ha0knxnqem.gz
-C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\kakad\source\repos\MOM\MOM\obj\Debug\net10.0\compressed\06cozjskh2-{0}-qol3cmhx7k-qol3cmhx7k.gz

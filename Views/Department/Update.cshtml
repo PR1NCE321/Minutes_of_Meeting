@@ -1,0 +1,50 @@
+@model MOM.Models.DepartmentModel
+
+@{
+    ViewData["Title"] = "Update Department";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+            
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                 
+                <div class="card-body p-0">
+                    <div class="p-5 text-white text-center position-relative" style="background: linear-gradient(135deg, #4DA8DA 0%, #5EC2F2 100%);">
+                        <div class="position-relative z-1">
+                            <i class="bi bi-building-fill-gear display-1 mb-3 text-white-50"></i>
+                            <h2 class="fw-bold mb-0">Update Department</h2>
+                        </div>
+                    </div>
+
+                    <div class="p-5 bg-white">
+                        <form asp-action="Update">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3 small"></div>
+                            <input type="hidden" asp-for="DepartmentID" />
+                            <input type="hidden" asp-for="Created" />
+
+                            <div class="form-group mb-4">
+                                <label class="text-uppercase text-muted small fw-bold mb-2">Department Name</label>
+                                <input asp-for="DepartmentName" class="form-control form-control-lg bg-light border-0 fw-bold text-dark" style="border-radius: 12px; padding: 1rem;" placeholder="e.g. Finance" />
+                                <span asp-validation-for="DepartmentName" class="text-danger small mt-1 d-block"></span>
+                            </div>
+
+                            <div class="mt-5 d-flex gap-2">
+                                <a asp-action="Index" class="btn btn-light w-50 py-3 rounded-3 fw-bold text-muted">Back</a>
+                                <button type="submit" class="btn btn-primary w-50 py-3 rounded-3 fw-bold shadow-sm border-0" style="background-color: #4DA8DA;">
+                                    Save
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

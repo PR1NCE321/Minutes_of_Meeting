@@ -10,6 +10,8 @@ public class MeetingVenueModel
     [Key]
     public int MeetingVenueID { get; set; }
 
+    [Display(Name = "Venue Name")]
+    [Required(ErrorMessage = "Please enter venue name")]
     [StringLength(100)]
     public string MeetingVenueName { get; set; }
 
